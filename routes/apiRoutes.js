@@ -11,7 +11,7 @@ mongoose.set('useNewUrlParser', true);
 const db = require("../models");
 
 // Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://turank:password1@ds253418.mlab.com:53418/heroku_357vnfzp";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 module.exports = function (app) {
