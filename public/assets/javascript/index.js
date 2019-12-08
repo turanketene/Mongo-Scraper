@@ -1,4 +1,4 @@
-/* global bootbox */
+// Wait for document to load page first before javascript
 $(document).ready(function() {
     // Setting a reference to the article-container div where all the dynamic content will go
     // Adding event listeners to any dynamically generated "save article"
@@ -11,7 +11,6 @@ $(document).ready(function() {
     function initPage() {
       // Run an AJAX request for any unsaved headlines
       $.get("/api/headlines?saved=false").then(function(data) {
-  
         articleContainer.empty();
         // If we have headlines, render them to the page
         if (data && data.length) {
@@ -22,7 +21,6 @@ $(document).ready(function() {
         }
       });
     }
-  
     function renderArticles(articles) {
       // This function handles appending HTML containing our article data to the page
       // We are passed an array of JSON containing all available articles in our database
@@ -36,7 +34,6 @@ $(document).ready(function() {
       // append them to the articleCards container
       articleContainer.append(articleCards);
     }
-  
     function createCard(article) {
       // This function takes in a single JSON object for an article/headline
       // It constructs a jQuery element containing all of the formatted HTML for the
@@ -50,9 +47,7 @@ $(document).ready(function() {
           $("<a class='btn btn-success save'>Save Article</a>")
         )
       );
-  
       var cardBody = $("<div class='card-body'>").text(article.summary);
-  
       card.append(cardHeader, cardBody);
       // We attach the article's id to the jQuery element
       // We will use this when trying to figure out which article the user wants to save
@@ -60,7 +55,6 @@ $(document).ready(function() {
       // We return the constructed card jQuery element
       return card;
     }
-  
     function renderEmpty() {
       // This function renders some HTML to the page explaining we don't have any articles to view
       // Using a joined array of HTML string data because it's easier to read/change than a concatenated string
@@ -83,7 +77,6 @@ $(document).ready(function() {
       // Appending this data to the page
       articleContainer.append(emptyAlert);
     }
-  
     function handleArticleSave() {
       // This function is triggered when the user wants to save an article
       // When we rendered the article initially, we attached a javascript object containing the headline id
@@ -91,12 +84,10 @@ $(document).ready(function() {
       var articleToSave = $(this)
         .parents(".card")
         .data();
-  
       // Remove card from page
       $(this)
         .parents(".card")
         .remove();
-  
       articleToSave.saved = true;
       // Using a patch method to be semantic since this is an update to an existing record in our collection
       console.log(articleToSave)
@@ -114,7 +105,6 @@ $(document).ready(function() {
         }
       });
     }
-  
     function handleArticleScrape() {
       // This function handles the user clicking any "scrape new article" buttons
       $.get("/api/fetch").then(function(data) {
@@ -128,7 +118,6 @@ $(document).ready(function() {
         window.location.href = "/";
       });
     }
-  
     function handleArticleClear() {
       $.get("api/clear").then(function(data) {
         console.log(data)

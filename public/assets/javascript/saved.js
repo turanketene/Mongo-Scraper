@@ -9,7 +9,6 @@ $(document).ready(function() {
     $(document).on("click", ".btn.save", handleNoteSave);
     $(document).on("click", ".btn.note-delete", handleNoteDelete);
     $(".clear").on("click", handleArticleClear);
-  
     function initPage() {
       // Empty the article container, run an AJAX request for any saved headlines
       $.get("/api/headlines?saved=true").then(function(data) {
@@ -23,7 +22,6 @@ $(document).ready(function() {
         }
       });
     }
-  
     function renderArticles(articles) {
       // This function handles appending HTML containing our article data to the page
       // We are passed an array of JSON containing all available articles in our database
@@ -37,7 +35,6 @@ $(document).ready(function() {
       // append them to the articleCards container
       articleContainer.append(articleCards);
     }
-  
     function createCard(article) {
       // This function takes in a single JSON object for an article/headline
       // It constructs a jQuery element containing all of the formatted HTML for the
@@ -52,18 +49,14 @@ $(document).ready(function() {
           $("<a class='btn btn-info notes'>Article Notes</a>")
         )
       );
-  
       var cardBody = $("<div class='card-body'>").text(article.summary);
-  
       card.append(cardHeader, cardBody);
-  
       // We attach the article's id to the jQuery element
       // We will use this when trying to figure out which article the user wants to remove or open notes for
       card.data("_id", article._id);
       // We return the constructed card jQuery element
       return card;
     }
-  
     function renderEmpty() {
       // This function renders some HTML to the page explaining we don't have any articles to view
       // Using a joined array of HTML string data because it's easier to read/change than a concatenated string
@@ -85,7 +78,6 @@ $(document).ready(function() {
       // Appending this data to the page
       articleContainer.append(emptyAlert);
     }
-  
     function renderNotesList(data) {
       // This function handles rendering note list items to our notes modal
       // Setting up an array of notes to render after finished
@@ -112,14 +104,12 @@ $(document).ready(function() {
       // Now append the notesToRender to the note-container inside the note modal
       $(".note-container").append(notesToRender);
     }
-  
     function handleArticleDelete() {
       // This function handles deleting articles/headlines
       // We grab the id of the article to delete from the card element the delete button sits inside
       var articleToDelete = $(this)
         .parents(".card")
         .data();
-  
       // Remove card from page
       $(this)
         .parents(".card")
@@ -173,7 +163,6 @@ $(document).ready(function() {
         renderNotesList(noteData);
       });
     }
-  
     function handleNoteSave() {
       // This function handles what happens when a user tries to save a new note for an article
       // Setting a variable to hold some formatted data about our note,
@@ -192,7 +181,6 @@ $(document).ready(function() {
         });
       }
     }
-  
     function handleNoteDelete() {
       // This function handles the deletion of notes
       // First we grab the id of the note we want to delete
@@ -207,7 +195,6 @@ $(document).ready(function() {
         bootbox.hideAll();
       });
     }
-  
     function handleArticleClear() {
       $.get("api/clear")
         .then(function(data) {
